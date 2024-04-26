@@ -1,16 +1,16 @@
 import java.awt.*;
-import java.awt.event.*;
 import java.util.Objects;
 import javax.swing.*;
 
 public class Tictactoe {
     int boardWidth = 600;
-    int boardHeight = 650;
+    int boardHeight = 700;
 
     JFrame frame = new JFrame("Tic Tac Toe");
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
+    JButton playAgain = new JButton("Play Again");
 
     JButton[][] board = new JButton[3][3];
     String playerX = "X";
@@ -42,6 +42,25 @@ public class Tictactoe {
         boardPanel.setLayout(new GridLayout(3, 3));
         boardPanel.setBackground(Color.DARK_GRAY);
         frame.add(boardPanel);
+
+        playAgain.setBackground(Color.DARK_GRAY);
+        playAgain.setForeground(Color.WHITE);
+        playAgain.setFont(new Font("Arial", Font.BOLD, 50));
+        playAgain.setFocusable(false);
+        frame.add(playAgain, BorderLayout.SOUTH);
+
+        playAgain.addActionListener(_ -> {
+            gameOver = false;
+            turns = 0;
+            textLabel.setText("Tic Tac Toe");
+            currentPlayer = playerX;
+
+            for (int r = 0; r < 3; r++) {
+                for (int c = 0; c < 3; c++) {
+                    board[r][c].setText("");
+                }
+            }
+        });
 
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
