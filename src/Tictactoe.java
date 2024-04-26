@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
 import javax.swing.*;
 
 public class Tictactoe {
@@ -53,21 +54,18 @@ public class Tictactoe {
                 tile.setFont(new Font("Arial", Font.BOLD, 120));
                 tile.setFocusable(false);
 
-                tile.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (gameOver) return;
-                        JButton tile = (JButton) e.getSource();
+                tile.addActionListener(e -> {
+                    if (gameOver) return;
+                    JButton tile1 = (JButton) e.getSource();
 
-                        if (tile.getText() == "") {
-                            tile.setText(currentPlayer);
-                            turns++;
-                            checkWinner();
+                    if (Objects.equals(tile1.getText(), "")) {
+                        tile1.setText(currentPlayer);
+                        turns++;
+                        checkWinner();
 
-                            if (!gameOver) {
-                                currentPlayer = currentPlayer == playerX ? playerO : playerX;
-                                textLabel.setText(currentPlayer + "'s turn");
-                            }
+                        if (!gameOver) {
+                            currentPlayer = Objects.equals(currentPlayer, playerX) ? playerO : playerX;
+                            textLabel.setText(currentPlayer + "'s turn");
                         }
                     }
                 });
@@ -77,10 +75,10 @@ public class Tictactoe {
 
     void checkWinner() {
         for (int r = 0; r < 3; r++) {
-            if (board[r][0].getText() == "") continue;
+            if (Objects.equals(board[r][0].getText(), "")) continue;
 
-            if (board[r][0].getText() == board[r][1].getText() &&
-                    board[r][1].getText() == board[r][2].getText()) {
+            if (Objects.equals(board[r][0].getText(), board[r][1].getText()) &&
+                    Objects.equals(board[r][1].getText(), board[r][2].getText())) {
                 for (int i = 0; i < 3; i++) {
                     setWinner(board[r][i]);
                 }
@@ -90,10 +88,10 @@ public class Tictactoe {
         }
 
         for (int c = 0; c < 3; c++) {
-            if (board[0][c].getText() == "") continue;
+            if (Objects.equals(board[0][c].getText(), "")) continue;
 
-            if (board[0][c].getText() == board[1][c].getText() &&
-                    board[1][c].getText() == board[2][c].getText()) {
+            if (Objects.equals(board[0][c].getText(), board[1][c].getText()) &&
+                    Objects.equals(board[1][c].getText(), board[2][c].getText())) {
                 for (int i = 0; i < 3; i++) {
                     setWinner(board[i][c]);
                 }
@@ -102,18 +100,18 @@ public class Tictactoe {
             }
         }
 
-        if (board[0][0].getText() == board[1][1].getText() &&
-                board[1][1].getText() == board[2][2].getText() &&
-                board[0][0].getText() != "") {
+        if (Objects.equals(board[0][0].getText(), board[1][1].getText()) &&
+                Objects.equals(board[1][1].getText(), board[2][2].getText()) &&
+                !Objects.equals(board[0][0].getText(), "")) {
             for (int i = 0; i < 3; i++) {
                 setWinner(board[i][i]);
             }
             gameOver = true;
         }
 
-        if (board[0][2].getText() == board[1][1].getText() &&
-                board[1][1].getText() == board[2][0].getText() &&
-                board[0][2].getText() != "") {
+        if (Objects.equals(board[0][2].getText(), board[1][1].getText()) &&
+                Objects.equals(board[1][1].getText(), board[2][0].getText()) &&
+                !Objects.equals(board[0][2].getText(), "")) {
             setWinner(board[0][2]);
             setWinner(board[1][1]);
             setWinner(board[2][0]);
