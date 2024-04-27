@@ -59,6 +59,7 @@ public class Tictactoe {
                 for (int c = 0; c < 3; c++) {
                     board[r][c].setText("");
                     board[r][c].setBackground(Color.DARK_GRAY);
+                    board[r][c].setForeground(Color.WHITE);
                 }
             }
         });
